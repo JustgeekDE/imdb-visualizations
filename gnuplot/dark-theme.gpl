@@ -1,0 +1,58 @@
+###############################################################################
+# Created on 10.08.2014
+#
+# @author: Philip Peter <philip.peter@justgeek.de>
+#
+# As long as you retain this notice you can do whatever you want with this
+# stuff. If we meet some day, and you think this stuff is worth it, you can
+# buy me a beer in return
+#
+# Philip Peter
+###############################################################################
+
+### Reset everything ###
+unset label
+
+unset xlabel
+unset ylabel
+unset y2label
+
+unset xtic
+unset x2tic
+unset ytics
+unset y2tics
+
+## Text colors, various shades of grey
+set style line 52 lc rgb '#202020' lt 1 lw 0.5
+set style line 53 lc rgb '#404040' lt 1 lw 0.5
+set style line 54 lc rgb '#808080' lt 1 lw 0.5
+set style line 55 lc rgb '#A0A0A0' lt 1 lw 0.5
+set style line 56 lc rgb '#C0C0C0' lt 1 lw 0.5
+set grid back ls 52
+
+set style fill solid 1.0 border lt 0
+ 
+# change a color of border.
+# set border lw 0 lc rgb "C0C0C0"
+set border ls 54
+set border 3
+ 
+# change text colors of tics
+set xtics textcolor ls 54
+set ytics textcolor ls 54
+#set y2tics textcolor ls 54
+ 
+# change text colors of labels
+set xlabel "X" textcolor ls 54
+set ylabel "Y" textcolor ls 54
+#set y2label "Y2" textcolor ls 54
+set title textcolor ls 54
+ 
+# change a text color of key
+set key textcolor ls 54
+set key noopaque
+
+### set output format ###
+### colors are bg, border, x,y
+# set terminal png truecolor size 1200,800 enhanced font "Sans,16" background "#000000"
+set terminal svg size 1200,800 enhanced font "Sans,16" background "#000000"

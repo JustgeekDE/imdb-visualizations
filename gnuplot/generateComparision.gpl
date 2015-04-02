@@ -1,0 +1,70 @@
+###############################################################################
+# Created on 10.08.2014
+#
+# @author: Philip Peter <philip.peter@justgeek.de>
+#
+# As long as you retain this notice you can do whatever you want with this
+# stuff. If we meet some day, and you think this stuff is worth it, you can
+# buy me a beer in return
+#
+# Philip Peter
+###############################################################################
+
+load "general-theme.gpl"
+set xrange[1914:2014]
+set yrange[0:1]
+set arrow from graph 0,0.5 to graph 0.99,0.5 nohead back ls 54 lw 1 lt 0
+set style fill transparent solid 0.6 noborder
+
+set format y "%.2f"
+unset key
+
+### Happy movies ###
+set style line 71 lc rgb '#FF720D' #orange
+set style line 72 lc rgb '#0D9AFF' #blue
+
+set label 1 "comedy" at graph 0.5,0.7 center font ",16" back textcolor rgb '#202020'
+set label 2 "drama" at graph 0.5,0.3 center font ",16" back textcolor rgb '#202020'
+
+set title "ratio of happy vs. sad movies"
+set output imageDir.'grouped.happy.per.annum.relative.'.outputFormat
+set multiplot
+plot \
+     genreData using 1:(($2+$6)/($2+$6)) with filledcurves x1 title "comedy" ls 71, \
+     genreData using 1:(($2)/($2+$6)) with filledcurves x1 title "drama" ls 72
+
+unset multiplot
+
+set title "ratio of happy vs. sad feature movies"
+set output imageDir.'grouped.happy.per.annum.relative.features.'.outputFormat
+set multiplot
+plot \
+     genreDataFeatures using 1:(($2)/($2+$6)) with filledcurves x2 title "comedy" ls 71, \
+     genreDataFeatures using 1:(($2)/($2+$6)) with filledcurves x1 title "drama" ls 72
+
+unset multiplot
+
+### Action movies ###
+set style line 71 lc rgb '#FF4FAD' #orange
+set style line 72 lc rgb '#4fffa1' #blue
+
+set label 1 "romance" at graph 0.5,0.7 center font ",16" front textcolor rgb '#202020'
+set label 2 "action" at graph 0.5,0.3 center font ",16" front textcolor rgb '#202020'
+
+set title "ratio of action vs. romance movies"
+set output imageDir.'grouped.action.per.annum.relative.'.outputFormat
+set multiplot
+plot \
+     genreData using 1:(1) with filledcurves x1 title "romance" ls 71, \
+     genreData using 1:(($12)/($8+$12)) with filledcurves x1 title "action" ls 72
+
+unset multiplot
+
+set title "ratio of happy vs. sad feature movies"
+set output imageDir.'grouped.action.per.annum.relative.features.'.outputFormat
+set multiplot
+plot \
+     genreDataFeatures using 1:(($8+$12)/($8+$12)) with filledcurves x1 title "romance" ls 71, \
+     genreDataFeatures using 1:(($12)/($8+$12)) with filledcurves x1 title "action" ls 72
+
+unset multiplot

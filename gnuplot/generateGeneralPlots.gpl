@@ -1,0 +1,128 @@
+###############################################################################
+# Created on 10.08.2014
+#
+# @author: Philip Peter <philip.peter@justgeek.de>
+#
+# As long as you retain this notice you can do whatever you want with this
+# stuff. If we meet some day, and you think this stuff is worth it, you can
+# buy me a beer in return
+#
+# Philip Peter
+###############################################################################
+
+load "general-theme.gpl"
+
+
+### Per year ###
+set title "movies produced per year"
+set output imageDir.'numbers.per.annum.'.outputFormat
+
+
+plot \
+     rawMovieCounts using 1:2 with lines title "all IMDb entries" ls 2 lw 2, \
+     runtimeData using 1:2 with lines title "with runtime info" ls 3 lw 2, \
+     runtimeDataFeatures using 1:2 with lines title "feature length (40+ min)" ls 4 lw 2
+
+
+### Cummulative ###
+set title "total movies produced"
+set output imageDir.'number.cummulative.'.outputFormat
+
+a=0
+cummulative_sum(x)=(a=a+x,a)
+
+plot \
+     rawMovieCounts using 1:(cummulative_sum($2)) with lines title "all IMDb entries" ls 2 lw 2, \
+     runtimeData using 1:4 with lines title "with runtime info" ls 3 lw 2, \
+     runtimeDataFeatures using 1:4 with lines title "feature length (40+ min)" ls 4 lw 2
+
+
+### Average length ###
+set title "average movie length per year"
+set output imageDir.'average.length.per.annum.'.outputFormat
+
+average_length(x,y)=(x/y)
+plot runtimeData using 1:(average_length($3, $2)) with lines title "average length" ls 2 lw 2
+
+
+### Runtime Brackets ###
+set title "number of movies by length (relative)"
+set output imageDir.'grouped.length.relative.per.annum.'.outputFormat
+set multiplot
+set key below horizontal left
+set format y "%.2f"
+
+plot \
+     runtimeDataBrackets using 1:(($2+$4+$6+$8+$10+$12)/($14)) with filledcurves x1 title "3h+" ls 21, \
+     runtimeDataBrackets using 1:(($2+$4+$6+$8+$10)/($14)) with filledcurves x1 title "2h - 3h" ls 22, \
+     runtimeDataBrackets using 1:(($2+$4+$6+$8)/($14)) with filledcurves x1 title "1h - 2h" ls 23, \
+     runtimeDataBrackets using 1:(($2+$4+$6)/($14)) with filledcurves x1 title "30-60 minutes" ls 24, \
+     runtimeDataBrackets using 1:(($2+$4)/($14)) with filledcurves x1 title "10-30 minutes" ls 25, \
+     runtimeDataBrackets using 1:($2/($14)) with filledcurves x1 title "0-10 minutes" ls 26
+unset multiplot
+set key inside left top vertical
+
+
+### Runtime Brackets ###
+set title "number of movies by length (absolute)"
+set output imageDir.'grouped.length.total.per.annum.'.outputFormat
+set multiplot
+set format y "%.1s%c"
+plot \
+     runtimeDataBrackets using 1:(($2+$4+$6+$8+$10+$12)) with filledcurves x1 title "3h+" ls 21, \
+     runtimeDataBrackets using 1:(($2+$4+$6+$8+$10)) with filledcurves x1 title "2h - 3h" ls 22, \
+     runtimeDataBrackets using 1:(($2+$4+$6+$8)) with filledcurves x1 title "1h - 2h" ls 23, \
+     runtimeDataBrackets using 1:(($2+$4+$6)) with filledcurves x1 title "30-60 minutes" ls 24, \
+     runtimeDataBrackets using 1:(($2+$4)) with filledcurves x1 title "10-30 minutes" ls 25, \
+     runtimeDataBrackets using 1:($2) with filledcurves x1 title "0-10 minutes" ls 26
+unset multiplot
+set key left
+
+### Runtime per annum ###
+set y2label ""
+set y2tics nomirror
+
+set format y "%.0s%c"
+
+#set arrow from graph 0.02, second 29220 to first 2014, second 29220 nohead front ls 61 lw 2
+set label "average life expectancy within the OECD\n is 29k days (OECD better life index)" at graph 0.5, second 22000 front tc ls 61
+
+set arrow from graph 0.02, second 10227 to first 2014, second 10227 nohead front ls 62 lw 2
+set label '16 hours a day, 6 days / week from ages 16-65' at graph 0.04, second 10727 front tc ls 62
+
+set arrow from graph 0.02, second 3282 to first 2014, second 3282 nohead front ls 63 lw 2
+set label 'average hours worked 1965-2009 (U.S.)' at graph 0.04, second 3782 front tc ls 63
+
+#set style fill solid 0.4
+
+set title "combined length of all movies produced"
+set output imageDir.'runtimes.cummulative.'.outputFormat
+plot \
+     runtimeData using 1:5 axes x1y2 with boxes title "combined length (days)" ls 22, \
+     runtimeDataFeatures using 1:5 axes x1y2 with boxes title "length of feature films (40+ min)" ls 23, \
+     runtimeData using 1:4 with lines title "total number of movies" ls 2 lw 2, \
+     runtimeDataFeatures using 1:4 with lines title "number of feature films (40+ min)" ls 3 lw 2
+
+
+set title "combined length of all movies produced per year"
+set output imageDir.'runtimes.per.annum.'.outputFormat
+
+set format y "%.0s%c"
+set format y2 "%.0fd"
+
+
+set arrow from graph 0.02, second 365.25 to first 2014, second 365.25 nohead front ls 61 lw 2
+set label '365.25 days' at graph 0.04, second 385.25 front tc ls 61
+
+set arrow from graph 0.02, second 208.67 to first 2014, second 208.67 nohead front ls 62 lw 2
+set label '16 hours a day 6 days a week' at graph 0.04, second 228.67 front tc ls 62
+
+set arrow from graph 0.02, second 71 to first 2014, second 71 nohead front ls 63 lw 2
+set label 'average hours worked in 2011 (U.S.)' at graph 0.04, second 91 front tc ls 63
+
+plot \
+     runtimeData using 1:3 axes x1y2 with boxes title "combined length (days)" ls 22 lw 1, \
+     runtimeDataFeatures using 1:3 axes x1y2 with boxes title "length of feature films (40+ min)" ls 23 lw 1, \
+     runtimeData using 1:2 with lines title "total number of movies" ls 2 lw 2, \
+     runtimeDataFeatures using 1:2 with lines title "number of feature films (40+ min)" ls 3 lw 2
+

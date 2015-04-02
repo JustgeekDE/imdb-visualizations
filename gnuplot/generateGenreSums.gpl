@@ -1,0 +1,37 @@
+###############################################################################
+# Created on 10.08.2014
+#
+# @author: Philip Peter <philip.peter@justgeek.de>
+#
+# As long as you retain this notice you can do whatever you want with this
+# stuff. If we meet some day, and you think this stuff is worth it, you can
+# buy me a beer in return
+#
+# Philip Peter
+###############################################################################
+
+load "general-theme.gpl"
+
+unset key
+unset xrange
+unset yrange
+
+set xrange [0:23]
+
+# Make the x axis labels easier to read.
+set xtics rotate out
+# Select histogram data
+set style data histogram
+
+set xtics textcolor ls 55
+
+#genreSums
+
+### Genre count ###
+set title "number of movies tagged with each genre"
+set output imageDir.'numbers.per.genre.totals.'.outputFormat
+
+set style histogram clustered
+plot genreSumsFeatures every 2::0 using 2:xticlabels(1) title columnheader ls 22
+
+

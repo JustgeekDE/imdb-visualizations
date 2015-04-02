@@ -1,0 +1,103 @@
+###############################################################################
+# Created on 10.08.2014
+#
+# @author: Philip Peter <philip.peter@justgeek.de>
+#
+# As long as you retain this notice you can do whatever you want with this
+# stuff. If we meet some day, and you think this stuff is worth it, you can
+# buy me a beer in return
+#
+# Philip Peter
+###############################################################################
+
+unset log
+load "light-theme.gpl"
+
+set title font ",19"
+
+set key left
+
+set xlabel ""
+set ylabel ""
+
+### set grid ###
+set xtic nomirror out 1890,10,2010
+set ytics nomirror
+
+
+set key left samplen 2
+set format y "%.0s%c"
+set format y2 "%.0s%c d"
+
+set xrange[1888:2014]
+### Data sets ###
+dataDir  = "..\\data\\"
+imageDir = "..\\plots\\svg\\"
+
+rawMovieCounts      = dataDir."TotalCountsPerYear.dat"
+runtimeData         = dataDir."runtimes.dat"
+runtimeDataBrackets = dataDir."runtimes.brackets.dat"
+runtimeDataFeatures = dataDir."runtimes.features.dat"
+genreData           = dataDir."genres.dat"
+genreDataFeatures   = dataDir."genres.features.dat"
+genreSums           = dataDir."genres.sum.dat"
+genreSumsFeatures   = dataDir."genres.features.sum.dat"
+workHours           = dataDir."hours.worked.dat"
+
+outputFormat        = 'svg'
+
+defaultDisclaimer   = "*based on all IMDb entries for cinema,\n direct-to-DVD and direct-to-TV movies"
+set label defaultDisclaimer at screen 0.98, 0.98 right font ",8" front tc ls 54
+
+
+## Line colors a bit lighter than original
+set style line 1 lc rgb '#FF0000' #red
+set style line 2 lc rgb '#00c000' #green 
+set style line 3 lc rgb '#0080ff' #blue
+set style line 4 lc rgb '#c000ff'
+set style line 5 lc rgb '#00eeee'
+set style line 6 lc rgb '#c04000'
+set style line 7 lc rgb '#c8c800'
+set style line 8 lc rgb '#4169e1'
+set style line 9 lc rgb '#ffc020'
+set style line 10 lc rgb '#008040'
+set style line 11 lc rgb '#c080ff'
+set style line 12 lc rgb '#306080'
+set style line 13 lc rgb '#8b0000'
+set style line 14 lc rgb '#408000'
+set style line 15 lc rgb '#ff80ff'
+
+
+# Muted colors for boxes
+set style line 21 lc rgb '#FF9999' #red
+set style line 22 lc rgb '#99FF99' #green
+set style line 23 lc rgb '#99CCFF' #blue
+set style line 24 lc rgb '#E699FF'
+set style line 25 lc rgb '#8FEEEE'
+set style line 26 lc rgb '#C08D73'
+set style line 27 lc rgb '#C8C878'
+set style line 28 lc rgb '#879DE1'
+set style line 29 lc rgb '#FFE299'
+set style line 30 lc rgb '#4D8066'
+set style line 31 lc rgb '#CC99FF'
+set style line 32 lc rgb '#4D6C80'
+set style line 33 lc rgb '#8B5353'
+set style line 34 lc rgb '#66804D'
+set style line 35 lc rgb '#FF99FF'
+## repeat
+set style line 36 lc rgb '#FF9999'
+set style line 37 lc rgb '#99FF99'
+set style line 38 lc rgb '#99CCFF'
+set style line 39 lc rgb '#E699FF'
+set style line 40 lc rgb '#8FEEEE'
+set style line 41 lc rgb '#C08D73'
+set style line 42 lc rgb '#C8C878'
+set style line 43 lc rgb '#879DE1'
+set style line 44 lc rgb '#FFE299'
+set style line 45 lc rgb '#4D8066'
+
+
+## Annotation colors, from yellow to red
+set style line 63 lc rgb '#B38F24' #yellow
+set style line 62 lc rgb '#CC7A29' #orange 
+set style line 61 lc rgb '#B33B24' #red 
